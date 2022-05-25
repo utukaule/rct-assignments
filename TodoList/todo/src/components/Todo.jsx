@@ -7,17 +7,22 @@ export const Todo = () => {
     const handleChange = (e) => {
         setValue(e.target.value);
     }
+
+    const onDelete = (id) => {
+        let newTodos = todos.filter(todo => todo.id !== id);
+        setTodos(newTodos)
+    }
     //read input
     //update todo list
     //re-render todos list when updated.
     return <div>
         {/* use handleChange or use directly like go to onChange and type {(e)=>setValue(e.target.value)} */}
         <input value={value} onChange={handleChange} placeholder="Add Todo..." />
-            {/* // The value above is knows as value mapping */}
+        {/* // The value above is knows as value mapping */}
         <button onClick={() => {
             setTodos([
                 ...todos,
-                {id:Date.now(), value: value, isCompleted: false }
+                { id: Date.now(), value: value, isCompleted: false }
             ])
             setValue("")
         }}
@@ -28,7 +33,7 @@ export const Todo = () => {
         <div>
             {/* todo list is here */}
             {todos.map((todo) => (
-               <TodoItem key={todo.id} todo={todo}/>
+                <TodoItem key={todo.id} todo={todo} onDelete={onDelete} />
             ))}
         </div>
     </div>
